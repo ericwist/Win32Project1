@@ -60,8 +60,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     return (int) msg.wParam;
 }
 
-
-
 //
 //  FUNCTION: MyRegisterClass()
 //
@@ -129,7 +127,6 @@ BOOL isThereAPreviousInstanceRunning() {
     }
     return ret;
 }
-
 
 //
 //   FUNCTION: InitInstance(HINSTANCE, int)
@@ -228,10 +225,8 @@ bool startSkype()
 
 int	CRotateDlg::m_flag = 0;
 CCriticalSection CRotateDlg::_critSect;
-int	CRotateDlg::m_X = 0;
-int	CRotateDlg::m_Y = 0;
 
-//thread - ejw
+//thread
 int CRotateDlg::Run()
 {
     //In case I started Skype from the WndProc, wait a bit...
@@ -286,6 +281,7 @@ int CRotateDlg::Run()
     } while (GetFlag() == 0);
     return(0);
 }
+
 CRotateDlg *rot = nullptr;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {

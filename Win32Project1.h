@@ -2,7 +2,7 @@
 
 #include "resource.h"
 
-//force windows to Idle and process messages from other apps and the system
+//force this app to Idle and process messages from other apps and the system
 inline bool Idle(DWORD ticks = 0)
 {
     MSG   msg;
@@ -29,8 +29,6 @@ class CRotateDlg : public CWinThread
 {
     static int m_flag; //shared resource
     static CCriticalSection  _critSect;
-    static int m_X;
-    static int m_Y;
 public:
 
     CRotateDlg() { return; };
@@ -45,7 +43,6 @@ public:
         m_flag = flag;
         _critSect.Unlock();
     }
-
     int GetFlag()
     {
         int ret;

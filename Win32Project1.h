@@ -3,6 +3,7 @@
 #include "resource.h"
 
 //force this app to Idle and process messages from other apps and the system
+//only use this is spearate thread, not in main thread.
 inline bool Idle(DWORD ticks = 0)
 {
     MSG   msg;

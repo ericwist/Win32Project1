@@ -29,7 +29,7 @@ inline bool Idle(DWORD ticks = 0)
 class CRotateDlg : public CWinThread
 {
     static int m_flag; //shared resource
-    static CCriticalSection  _critSect;
+    static CCriticalSection  m_critSect;
 public:
 
     CRotateDlg() { return; };
@@ -40,16 +40,16 @@ public:
     //flag stuff with locks
     void SetFlag(int flag)
     {
-        _critSect.Lock();
+        m_critSect.Lock();
         m_flag = flag;
-        _critSect.Unlock();
+        m_critSect.Unlock();
     }
     int GetFlag()
     {
         int ret;
-        _critSect.Lock();
+        m_critSect.Lock();
         ret = m_flag;
-        _critSect.Unlock();
+        m_critSect.Unlock();
         return ret;
     }
 };

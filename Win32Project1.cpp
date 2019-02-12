@@ -224,7 +224,7 @@ bool startSkype()
 }
 
 int	CRotateDlg::m_flag = 0;
-CCriticalSection CRotateDlg::_critSect;
+CCriticalSection CRotateDlg::m_critSect;
 
 //thread
 int CRotateDlg::Run()

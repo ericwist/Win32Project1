@@ -223,6 +223,53 @@ bool startSkype()
     return false;
 }
 
+void writeCode(HWND hDlg) {
+    const char* letters = "void Reverse(CLinkedList **head)\n{\n \
+// Initialize current, previous and\n \
+// next pointers\n \
+CLinkedList *curr = *head;\n \
+CLinkedList *prev = nullptr, *next = nullptr;\n \
+while (curr != nullptr)\n{\n \
+\t// Store next\n \
+\tnext = curr->next;\n \
+\t// Reverse current node's pointer\n \
+\tcurr->next = prev;\n \
+\t// Move pointers one position ahead.\n \
+\tprev = curr;\n \
+\tcurr = next;\n \
+}\n \
+*head = prev;\n \
+}";
+    int i = 0;
+
+    while (letters[i]) {
+        ///
+        Idle(2);
+        SetActiveWindow(hDlg);
+        SetForegroundWindow(hDlg);
+        Idle(2);
+        ////
+        if (letters[i] > 32 && letters[i] < 43 || letters[i] > 122 || letters[i] == 60 || letters[i] == 62) {
+            keybd_event(VK_SHIFT, 0xAA, 0, 0);
+        }
+        keybd_event(VkKeyScan(letters[i]), 0x9e, 0, 0);
+        keybd_event(VkKeyScan(letters[i]), 0x9e, KEYEVENTF_KEYUP, 0);
+        if (letters[i] > 32 && letters[i] < 43 || letters[i] > 122 || letters[i] == 60 || letters[i] == 62) {
+            keybd_event(VK_SHIFT, 0xAA, KEYEVENTF_KEYUP, 0);
+        }
+        Sleep(18);
+        ++i;
+    }
+    Sleep(10);
+    keybd_event(VK_CONTROL, 0x9d, 0, 0);
+    keybd_event(VkKeyScan('A'), 0x9e, 0, 0);
+    keybd_event(VkKeyScan('A'), 0x9e, KEYEVENTF_KEYUP, 0);
+    keybd_event(VK_CONTROL, 0x9d, KEYEVENTF_KEYUP, 0);
+    Sleep(50);
+    keybd_event(VK_BACK, 0x8a, 0, 0);
+    keybd_event(VK_BACK, 0x8a, KEYEVENTF_KEYUP, 0);
+}
+
 int	CRotateDlg::m_flag = 0;
 CCriticalSection CRotateDlg::m_critSect;
 
@@ -261,22 +308,27 @@ int CRotateDlg::Run()
             CString str2 = str.Right(s.GetLength());
             if (!lstrcmp(str2, s))
             {
-                Idle(50);
+                Idle(5);
                 SetActiveWindow(hDlg);
                 SetForegroundWindow(hDlg);
                 Sleep(5);
-                       
+                Idle(50);
+                writeCode(hDlg);
                 //WM_KEYDOWN: SHIFT
                 keybd_event(VK_MENU, 0, 0, 0);
                 keybd_event(VK_TAB, 0, 0, 0);
-                Idle(2000);
+                Idle(1000);
+                keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+                Idle(50);
+                keybd_event(VK_TAB, 0, 0, 0);
+                Idle(50);
                 // stop pressing "Alt-Tab"
                 keybd_event(VK_MENU, 0, KEYEVENTF_KEYUP, 0);
                 keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
                 break;
             }
         }
-        WaitForSingleObject(m_pEvent->m_hObject, 100000);// wait 100 seconds(100000), change if imeout is different on your company's monitoring program.
+        WaitForSingleObject(m_pEvent->m_hObject, 50000);// wait 100 seconds(100000), change if imeout is different on your company's monitoring program.
         ResetEvent(m_pEvent->m_hObject);
     } while (GetFlag() == 0);
     return(0);

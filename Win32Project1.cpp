@@ -185,8 +185,9 @@ bool IsSkypeRunning()
         //case sensitivity and length with spaces must be exact, 
         //or you can add some string manipulation if you want...
         //debug thru and check it
-        if (!lstrcmp(pe32.szExeFile,_T("notepad.exe")))// this is usually "lync.exe"
-        {
+//        if (!lstrcmp(pe32.szExeFile,_T("notepad.exe")) || (!lstrcmp(pe32.szExeFile, _T("Notepad.exe"))) ) // this is usually "lync.exe"
+        if (!_wcsicmp(pe32.szExeFile, _T("notepad.exe"))) // always will be wide char, could be capitalized in later versions of windows
+            {
             CloseHandle(hProcessSnapshot);
             return true;
         }
